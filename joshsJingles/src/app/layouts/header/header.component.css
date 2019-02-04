@@ -1,0 +1,8 @@
+.header{
+    color: blue;
+    background-color: blue;
+    position: fixed;
+    
+    width: 100px;
+    height: 20%;
+}
