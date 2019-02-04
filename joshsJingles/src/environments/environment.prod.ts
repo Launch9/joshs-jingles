@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  serverURL: "http://localhost:5001/joshsjingles/us-central1/app/"
 };
