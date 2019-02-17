@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service'
 import { Router, Params } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {HeaderComService} from '../../services/header-com.service';
 
 @Component({
   selector: 'page-login',
@@ -16,8 +17,11 @@ export class LoginComponent {
   constructor(
     public authService: AuthService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private hCom: HeaderComService
   ) {
+    var self = this;
+    self.hCom.setHeaderTab('login');
     this.createForm();
   }
 
@@ -29,6 +33,8 @@ export class LoginComponent {
   }
 
   tryLogin(value){
+    console.log("Value");
+    console.log(value);
     this.authService.doLogin(value)
     .then(res => {
       this.router.navigate(['/user']);

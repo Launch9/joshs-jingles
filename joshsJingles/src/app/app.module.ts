@@ -24,7 +24,9 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
-
+import { ReactiveFormsModule } from '@angular/forms';
+import { HeaderComService } from './services/header-com.service'
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,12 +44,15 @@ import { LoginComponent } from './components/login/login.component';
   imports: [
     BrowserModule,
     HttpModule,
+    HttpClientModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
   ],
   providers: [
+    HeaderComService,
     GlobalValuesService,
     UserDataService,
     FirebaseService,

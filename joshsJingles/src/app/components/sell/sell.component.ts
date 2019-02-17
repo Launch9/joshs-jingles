@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import {HeaderComService} from '../../services/header-com.service';
 @Component({
   selector: 'app-sell',
   templateUrl: './sell.component.html',
@@ -7,9 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SellComponent implements OnInit {
 
-  constructor() { }
+  constructor(private hCom: HeaderComService) { }
 
   ngOnInit() {
+    var self = this;
+    self.hCom.setHeaderTab('sell');
   }
 
 }

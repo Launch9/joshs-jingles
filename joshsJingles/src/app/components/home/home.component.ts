@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GlobalValuesService } from '../../services/global-values.service';
+import {HeaderComService} from '../../services/header-com.service';
+import {UserService } from '../../services/user.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -7,13 +9,14 @@ import { GlobalValuesService } from '../../services/global-values.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private gv: GlobalValuesService) { }
+  constructor(private userData: UserService, private gv: GlobalValuesService, private hCom: HeaderComService) { }
 
   updateShopStatus(){
     var self = this;
+    
     console.log("Calling is shop open!");
     console.log(self.gv);
-    
+    self.hCom.setHeaderTab('home');
     self.gv.isShopOpen((value)=>{
       console.log("Shop value is: ");
       console.log(value.json());
