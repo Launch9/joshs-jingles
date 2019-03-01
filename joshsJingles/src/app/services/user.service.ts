@@ -13,16 +13,19 @@ export class UserService {
    public afAuth: AngularFireAuth
   ){}
 
-  sendEmailVerification(){
+  sendEmailVerification(onFinish: ()=>void=null, onFail: (error)=>void=null){
     var self = this;
     self.getCurrentUser().then((user)=>{
       if(user){
         user.sendEmailVerification().then(function() {
           // Email sent.
             console.log("Email has been sent to " + user.email);
+            onFinish();
          }).catch(function(error) {
           console.log(error);
+
           // An error happened.
+          onFail(error);
          });
       }
     });
@@ -31,6 +34,7 @@ export class UserService {
   getCurrentUser(){
     var self = this;
     return new Promise<any>((resolve, reject) => {
+      console.log(self.user);
       if(self.user === null){
         var user = firebase.auth().onAuthStateChanged(function(user){
           if (user) {
@@ -43,7 +47,7 @@ export class UserService {
         })
       }
       else{
-        resolve(user);
+        resolve(self.user);
       }
     })
   }

@@ -35,4 +35,16 @@ export class FirebaseService {
       callback(value);
     }));
   }
+
+  public addRequest(formData, callback:(value)=>void){
+    var self = this;
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    var json = JSON.stringify({"userData":{"item": formData.email,
+    "comment": formData.password,
+    "type": formData.type}, "uid": formData.uid});
+    self.http.post(environment.serverURL + 'addLetter', json, {headers: headers}).subscribe((value=>{
+      callback(value);
+    }));
+  }
 }

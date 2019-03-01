@@ -6,7 +6,7 @@ import { toBase64String } from '@angular/compiler/src/output/source_map';
 })
 export class HeaderComService {
 
-  tabs = ["sell", "buy", "rules", "login", "home"];
+  tabs = ["request", "rules", "login", "home"];
   defaultTabColor = null;
   constructor() { }
 

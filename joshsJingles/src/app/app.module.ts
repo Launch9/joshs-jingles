@@ -13,9 +13,6 @@ import { UserDataService } from './services/user-data.service';
 import { FirebaseService } from './services/firebase.service';
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
-
-import { BuyComponent } from './components/buy/buy.component';
-import { SellComponent } from './components/sell/sell.component';
 import { RulesComponent } from './components/rules/rules.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { AngularFireModule } from 'angularfire2';
@@ -27,6 +24,8 @@ import { LoginComponent } from './components/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HeaderComService } from './services/header-com.service'
 import { HttpClientModule } from '@angular/common/http';
+import { RequestComponent } from './components/request/request.component';
+import { EmailVerifyComponent } from './components/email-verify/email-verify.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,11 +34,11 @@ import { HttpClientModule } from '@angular/common/http';
     AppLayoutComponent,
     Error404Component,
     RulesComponent,
-    BuyComponent,
-    SellComponent,
     OrdersComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    RequestComponent,
+    EmailVerifyComponent
   ],
   imports: [
     BrowserModule,

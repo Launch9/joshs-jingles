@@ -1,0 +1,43 @@
+<h1 class="header" id="emailWarning" style="color: red; display: none;">You need to register your email before you can make a request!<br>Click <a routerLink="/email-verify">here</a> to send an email for verification.</h1>
+<div class="parent" style="background: red !important;">
+    <div class="child">
+      <div *ngIf="typeOfLetterSelected === 0" class="container">
+          <div class="col-md-6 col-md-offset-3">
+              <button type="button" class="btn btn-primary btn-lg btn-block" (click)="setTypeOfLetter(1)">Purchase</button>
+              <button type="button" class="btn btn-danger btn-lg btn-block" (click)="setTypeOfLetter(2)">Sell</button>
+          </div>
+      </div>
+      <div *ngIf="typeOfLetterSelected === 1" class="letter border-purchase">
+          <i class="far fa-arrow-alt-circle-left back-button" (click)="goBack()"></i>
+          <form [formGroup]="purchaseForm">
+              <div class="form-group">
+                <label class="title-purchase">Purchase</label>
+                <input type="text" formControlName="email" class="form-control" placeholder="What do you want to purchase?">
+              </div>
+              <div class="form-group">
+                <label class="title-purchase">Extra Information and Pickup Location</label>
+                <textarea class="form-control" formControlName="password" rows="4" id="comment" placeholder="Is there any extra information you would like to include?"></textarea>
+              </div>
+              <button type="submit" (click)="sendCard(purchaseForm.value)" class="btn btn-default">Send</button>
+            </form>
+      </div>
+
+      <div *ngIf="typeOfLetterSelected === 2" class="letter border-sell">
+          <i class="far fa-arrow-alt-circle-left back-button" (click)="goBack()"></i>
+          <form [formGroup]="loginForm">
+              <div class="form-group">
+                <label class="title-sell">Sell</label>
+                <input type="text" formControlName="email" class="form-control" placeholder="What do you want to sell?">
+              </div>
+              <div class="form-group">
+                <label class="title-sell">Extra Information and Pickup Location</label>
+                <textarea class="form-control" formControlName="password" rows="4" id="comment" placeholder="Is there any extra information you would like to include?"></textarea>
+                
+              </div>
+              <button type="submit" (click)="sendCard(purchaseForm.value)" class="btn btn-default">Send</button>
+            </form>
+      </div>
+    </div>
+    
+</div>
+

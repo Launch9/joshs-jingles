@@ -16,6 +16,18 @@ app.use(cors({origin: 'http://localhost:4200'}));
 //Allow usage of json format.
 
 app.use(express.json());
+
+function GenerateGuid(length) {
+    var S4 = function () {
+        return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+    };
+    var guid = "";
+    for (i = 0; i < length; i++) {
+        guid += S4();
+    }
+    return guid;
+}
+
 /**
  * Tells if the shop is currently open or not.
  */
@@ -71,6 +83,25 @@ app.post('/makeRoomForNewAccount', (request,response)=>{
         response.send(JSON.stringify({"success":true}));
         throw error;
     });
+});
+
+app.post('/addLetter', (request,response)=>{
+    console.log("Adding letter!");
+    response.set('Cache-Control', 'public, max-age=300, s-maxage=600');
+    var json = JSON.parse(request.body);
+    console.log("Json");
+    console.log(json);
+    var ref = admin.database().ref("users/" + json.uid + "/requests/" + GenerateGuid(16));
+    ref.set(json.userData).then(()=>{
+        response.send({"success": true, "error": err});
+        return true;
+    }).catch((err)=>{
+        console.log("Error setting value. " + err);
+        response.send({"success": false, "error": err});
+        throw err;
+    });
+    
+    
 });
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
