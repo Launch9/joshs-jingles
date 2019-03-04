@@ -19,10 +19,10 @@ export class HomeComponent implements OnInit {
     self.hCom.setHeaderTab('home');
     self.gv.isShopOpen((value)=>{
       console.log("Shop value is: ");
-      console.log(value.json());
+     
       var imageOpen = document.getElementById('imageOpen');
       var imageClose = document.getElementById('imageClose');
-      if(value.json() === false){
+      if(value === false){
         //Shop is closed.
         console.log("Closing shop.");
         imageOpen.style.display = "none";

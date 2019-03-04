@@ -24,7 +24,7 @@
 
       <div *ngIf="typeOfLetterSelected === 2" class="letter border-sell">
           <i class="far fa-arrow-alt-circle-left back-button" (click)="goBack()"></i>
-          <form [formGroup]="loginForm">
+          <form [formGroup]="sellForm">
               <div class="form-group">
                 <label class="title-sell">Sell</label>
                 <input type="text" formControlName="email" class="form-control" placeholder="What do you want to sell?">
@@ -34,7 +34,7 @@
                 <textarea class="form-control" formControlName="password" rows="4" id="comment" placeholder="Is there any extra information you would like to include?"></textarea>
                 
               </div>
-              <button type="submit" (click)="sendCard(purchaseForm.value)" class="btn btn-default">Send</button>
+              <button type="submit" (click)="sendCard(sellForm.value)" class="btn btn-default">Send</button>
             </form>
       </div>
     </div>

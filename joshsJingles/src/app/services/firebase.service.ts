@@ -43,8 +43,29 @@ export class FirebaseService {
     var json = JSON.stringify({"userData":{"item": formData.email,
     "comment": formData.password,
     "type": formData.type}, "uid": formData.uid});
-    self.http.post(environment.serverURL + 'addLetter', json, {headers: headers}).subscribe((value=>{
+    self.http.post(environment.serverURL + 'addOrder', json, {headers: headers}).subscribe((value=>{
       callback(value);
     }));
   }
+
+  public requestOrders(userUID, callback:(value)=>void){
+    console.log("Requesting orders");
+    var self = this;
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    self.http.get(environment.serverURL + 'requestOrders', {
+      params: {
+        userUID: userUID
+      },
+      observe: 'response'}).subscribe((value=>{
+        console.log("This is the response1");
+        console.log(value);
+        callback(value);
+    }));
+  }
+
+  public removeOrder(userUID, orderUID, callback:(value)=>void){
+
+  }
+
 }

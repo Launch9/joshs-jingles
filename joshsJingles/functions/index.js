@@ -85,19 +85,68 @@ app.post('/makeRoomForNewAccount', (request,response)=>{
     });
 });
 
-app.post('/addLetter', (request,response)=>{
-    console.log("Adding letter!");
+app.post('/addOrder', (request,response)=>{
+    /*Logging information about the request*/
+    console.log("Adding order!");
+    var ip = request.header('x-forwarded-for') || request.connection.remoteAddress;
+    console.log("ip address: -> " + ip);
     response.set('Cache-Control', 'public, max-age=300, s-maxage=600');
     var json = JSON.parse(request.body);
-    console.log("Json");
-    console.log(json);
-    var ref = admin.database().ref("users/" + json.uid + "/requests/" + GenerateGuid(16));
+    var orderUUID = GenerateGuid(16);
+    var ref = admin.database().ref("globalOrders/" + orderUUID)
+    var userRef = admin.database().ref("users/" + json.uid + "/requests/");
+    json['orderUUID'] = orderUUID;
     ref.set(json.userData).then(()=>{
-        response.send({"success": true, "error": err});
-        return true;
+        userRef.push(orderUUID).then(()=>{
+            response.send({"success": true});
+            return true;
+        }).catch((err)=>{
+            console.log("Error setting value. " + err);
+            response.send({"success": false, "error": err});
+            throw err;
+        })
+        
     }).catch((err)=>{
         console.log("Error setting value. " + err);
         response.send({"success": false, "error": err});
+        throw err;
+    });
+    
+    
+});
+
+app.get('/requestOrders', (request,response)=>{
+    /*Logging information about the request*/
+    console.log("Getting orders!");
+    var ip = request.header('x-forwarded-for') || request.connection.remoteAddress;
+    console.log("ip address: -> " + ip);
+    response.set('Cache-Control', 'public, max-age=300, s-maxage=600');
+    var userUID = request.query.userUID;
+    console.log(userUID);
+    var userRef = admin.database().ref("users/" + userUID + "/requests/");
+    var returnList = [];
+    var keyList = [];
+    userRef.once('value').then((snap)=>{
+
+        snap.forEach(function(item) {
+            console.log(item.val());
+            keyList.push(item.val());
+        });
+        
+        for(var i = 0; i < keyList.length; i++){
+            var globalRef = admin.database().ref("globalOrders/" + keyList[i]);
+            globalRef.once('value').then((value2)=>{
+                returnList.push(value2.val());
+                if(returnList.length === keyList.length){
+                    response.send({"success": true, "value":returnList});
+                }
+            });
+        }
+        
+        return true;
+    }).catch((err)=>{
+        console.log("Error getting orders. "  + err);
+        response.send({"success": false, "value":null});
         throw err;
     });
     

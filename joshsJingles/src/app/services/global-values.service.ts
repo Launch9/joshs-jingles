@@ -13,7 +13,7 @@ export class GlobalValuesService {
   isShopOpen(callback:(value)=>void){
     var self = this;
     self.http.get(environment.serverURL + 'isShopOpen').subscribe((value=>{
-      callback(value);
+      callback(value.json());
     }));
   }
 }

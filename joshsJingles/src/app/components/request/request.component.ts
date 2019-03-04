@@ -12,6 +12,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class RequestComponent implements OnInit {
   purchaseForm: FormGroup;
+  sellForm: FormGroup;
   typeOfLetterSelected = 0;
   constructor(private router: Router, private firebase: FirebaseService, private userService: UserService,private fb: FormBuilder,private hCom: HeaderComService) {
     var self = this;
@@ -36,6 +37,10 @@ export class RequestComponent implements OnInit {
 
   createForm() {
     this.purchaseForm = this.fb.group({
+      email: ['', Validators.required ],
+      password: ['',Validators.required]
+    });
+    this.sellForm = this.fb.group({
       email: ['', Validators.required ],
       password: ['',Validators.required]
     });
@@ -69,7 +74,7 @@ export class RequestComponent implements OnInit {
     }
     self.userService.getCurrentUser().then((user)=>{
       console.log(user);
-      data.uid = user.uid;
+      data["uid"] = user.uid;
       self.firebase.addRequest(data, ()=>{
         console.log("Successfully sent card!");
         this.router.navigate(['/']);
