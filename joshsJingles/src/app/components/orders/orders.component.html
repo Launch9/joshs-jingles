@@ -2,7 +2,7 @@
     <div class="child">
       <div *ngFor="let order of orders">
         <div *ngIf="order.type === 'purchase'" class="letter border-purchase">
-          <i class="far fa-times-circle back-button" (click)="openDeleteDialog()"></i>
+          <i class="far fa-times-circle back-button" (click)="openDeleteDialog(order.orderUID)"></i>
           
               <div class="form-group">
                 <label class="title-purchase">Purchase</label>
@@ -16,7 +16,7 @@
             
         </div>
         <div *ngIf="order.type === 'sell'" class="letter border-sell">
-          <i class="far fa-times-circle back-button" (click)="openDeleteDialog()"></i>
+          <i class="far fa-times-circle back-button" (click)="openDeleteDialog(order.orderUID)"></i>
           
               <div class="form-group">
                 <label class="title-sell">Sell</label>

@@ -65,7 +65,20 @@ export class FirebaseService {
   }
 
   public removeOrder(userUID, orderUID, callback:(value)=>void){
-
+    console.log("Removing order!");
+    var self = this;
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      body: {
+        uid: userUID,
+        orderUID: orderUID,
+      },
+    };
+    self.http.delete(environment.serverURL + 'removeOrder', options).subscribe((value=>{
+      callback(value);
+    }));
   }
 
 }

@@ -10,6 +10,7 @@ import { UserService } from '../../services/user.service';
 export class OrdersComponent implements OnInit {
 
   orders:[];
+  currentOrderUID:"";
   constructor(private hCom: HeaderComService, private fbs: FirebaseService, private us: UserService) { }
 
   ngOnInit() {
@@ -27,7 +28,10 @@ export class OrdersComponent implements OnInit {
     })
   }
 
-  openDeleteDialog(){
+  openDeleteDialog(orderUID){
+    var self = this;
+    console.log("OrderUID: " + orderUID);
+    self.currentOrderUID = orderUID;
     document.getElementById("deleteDialog").style.display = "block";
   }
   
@@ -36,7 +40,13 @@ export class OrdersComponent implements OnInit {
   }
 
   actuallyDelete(){
-    
+    var self = this;
+    self.us.getCurrentUser().then((user)=>{
+      self.fbs.removeOrder(user.uid,self.currentOrderUID,()=>{
+        console.log("Succesfully removed order!");
+        
+      })
+    })
   }
 
 }
