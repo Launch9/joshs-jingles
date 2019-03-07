@@ -73,7 +73,7 @@ export class FirebaseService {
       }),
       body: {
         uid: userUID,
-        orderUID: orderUID,
+        orderUID: orderUID
       },
     };
     self.http.delete(environment.serverURL + 'removeOrder', options).subscribe((value=>{

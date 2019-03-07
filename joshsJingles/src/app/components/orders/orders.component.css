@@ -32,6 +32,7 @@ textarea {
 }
 
 .letter {
+  position: relative;
   width: calc(50vw - 50px);
   height: calc(300px);
   background: white;

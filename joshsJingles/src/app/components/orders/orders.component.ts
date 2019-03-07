@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {HeaderComService} from '../../services/header-com.service';
 import { FirebaseService } from '../../services/firebase.service';
 import { UserService } from '../../services/user.service';
+
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
@@ -41,10 +42,17 @@ export class OrdersComponent implements OnInit {
 
   actuallyDelete(){
     var self = this;
+    var orderID = self.currentOrderUID;
     self.us.getCurrentUser().then((user)=>{
-      self.fbs.removeOrder(user.uid,self.currentOrderUID,()=>{
+      self.fbs.removeOrder(user.uid,orderID,()=>{
         console.log("Succesfully removed order!");
-        
+        for(var i = 0; i < self.orders.length; i++){
+          if(this.orders[i].orderUUID == orderID){
+            console.log("Found order to delete!");
+            this.orders.splice(i, 1);
+          }
+        }
+        this.closeDeleteDialog();
       })
     })
   }
