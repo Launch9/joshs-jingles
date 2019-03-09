@@ -1,3 +1,8 @@
 .instruction{
     color: #68b4c9;
 }
+.text{
+    color: #f0a418;
+    outline-width: 5px;
+    outline-color: #df9d23;
+}

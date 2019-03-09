@@ -13,7 +13,7 @@ import { UserService } from '../../services/user.service';
 export class RegisterComponent {
 
   registerForm: FormGroup;
-  errorMessage: string = '';
+  errorMessage: string = 'dflkgnslkdjfbnfdkljbn';
   successMessage: string = '';
   canRegister: boolean = true;
   constructor(
@@ -25,7 +25,7 @@ export class RegisterComponent {
     private uData: UserService
   ) {
     var self = this;
-    self.hCom.setHeaderTab('register');
+    
     this.createForm();
    }
 
@@ -46,31 +46,26 @@ export class RegisterComponent {
 
             console.log("Value deal");
             console.log(value);
-            this.authService.doRegisterWithName(value)
+            this.authService.doRegisterWithName(value, (error)=>{
+              console.log("Nope! I have an error!");
+              console.log(error);
+              this.errorMessage = error.message;
+              this.successMessage = "";
+              
+            })
             .then(res => {
+              console.log("Got here!");
               console.log(res);
+              /*self.fireB.fillUserInfo({"data":{"email":value.email}, "uid":res.user.uid}, (value)=>{
+                console.log("Successfully filled user info.");
+              },(error)=>{
+                console.error(error);
+              })*/
               this.errorMessage = "";
               this.successMessage = "Your account has been created. We sent you an email to verify your account.";
               self.canRegister = false;
               self.uData.sendEmailVerification();
-              /*self.fireB.fillUserInfo({
-                "uid": res.user.uid,
-                "userData":{
-                  "firstName": firstName,
-                  "lastName": lastName
-                }
-                
-              }, (value)=>{
-                 this.successMessage = "Your account has been created. Please verify your email to use the service.";
-                 console.log("Finished filling user information.");
-                 
-              })*/
-            
-            }, err => {
-              console.log(err);
-              this.errorMessage = err.message;
-              this.successMessage = "";
-            })
+            });
           
         });
       }

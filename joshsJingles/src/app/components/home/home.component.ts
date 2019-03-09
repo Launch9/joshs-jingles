@@ -17,12 +17,13 @@ export class HomeComponent implements OnInit {
     console.log("Calling is shop open!");
     console.log(self.gv);
     self.hCom.setHeaderTab('home');
+    self.hCom.showLoading();
     self.gv.isShopOpen((value)=>{
       console.log("Shop value is: ");
-     
+      console.log(value);
       var imageOpen = document.getElementById('imageOpen');
       var imageClose = document.getElementById('imageClose');
-      if(value === false){
+      if(value.body === false){
         //Shop is closed.
         console.log("Closing shop.");
         imageOpen.style.display = "none";
@@ -33,6 +34,7 @@ export class HomeComponent implements OnInit {
         imageOpen.style.display = "block";
         imageClose.style.display = "none";
       }
+      self.hCom.hideLoading();
     });
   }
 

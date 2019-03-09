@@ -18,15 +18,14 @@ export class AuthService {
     })
   }
 
-  doRegisterWithName(value){
+  doRegisterWithName(value, ifFail: (error)=>void=null){
     return new Promise<any>((resolve, reject) => {
       firebase.auth().createUserWithEmailAndPassword(value.email, value.password).then((user) => {
         user.user.updateProfile({"displayName": value.displayName, "photoURL": ""}).then((result)=>{
+          console.log("Got here1");
           resolve(user);
-        });
-      }).catch(function(error) {
-        console.log(error);
-      });
+        }).catch((error)=>{if(ifFail!==null)ifFail(error)});
+      }).catch((error)=>{if(ifFail!==null)ifFail(error)});
     })
   }
 

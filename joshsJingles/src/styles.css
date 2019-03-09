@@ -1,6 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-html{background-color: #ceb467;};
-
+html { background: url('src/assets/images/floral-2622311_1920.jpg') }
 .blue{
     color: #4286f4;
 }
@@ -11,4 +10,10 @@ html{background-color: #ceb467;};
 
 .green{
     color: #069e0d;
+}
+
+.text-backdrop{
+    background: white;
+    box-shadow: 5px 10px 18px #888888;
+    border-radius: 5px;
 }

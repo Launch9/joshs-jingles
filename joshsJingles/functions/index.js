@@ -5,19 +5,27 @@ var cors = require('cors');
 var order = require('./modules/orders');
 var common = require('./modules/common');
 var account = require('./modules/account');
+var multer  = require('multer');
+var bodyParser = require('body-parser');
+const path = require('path');
+var compression = require('compression')
+
 admin.initializeApp(
     functions.config().firebase
 )
-
 const app = express();
+const DIR = path.join(__dirname, 'uploads');
 
-
-
+//Middleware
 // use it before all route definitions
 app.use(cors({origin: 'http://localhost:4200'}));
 //Allow usage of json format.
-
 app.use(express.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(compression());
+
+//Static directories
+app.use("/menu", express.static(__dirname + '/menu'));
 
 
 
@@ -29,6 +37,7 @@ app.get('/isShopOpen', (request, response)=>{
     response.set('Cache-Control', 'public, max-age=300, s-maxage=600');
     var ref = admin.database().ref("globalValues/isShopOpen");
     ref.once('value').then((value)=>{
+        console.log(value.val());
         response.send(value.val());
         return value;
     }).catch((err)=>{
@@ -39,6 +48,10 @@ app.get('/isShopOpen', (request, response)=>{
     
 });
 
+app.get('/ping', (req,res)=>{
+    console.log("User pinged server.");
+    res.send("pong");
+})
 app.post('/fillUserData', (req,res)=>{
     account.fillUserData(req,res,admin);
 });

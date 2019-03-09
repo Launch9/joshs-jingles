@@ -17,14 +17,17 @@ export class OrdersComponent implements OnInit {
   ngOnInit() {
     var self = this;
     self.hCom.setHeaderTab('orders');
+    self.hCom.showLoading();
     self.us.getCurrentUser().then((user)=>{
       self.fbs.requestOrders(user.uid, (value)=>{
         console.log("Request order value");
         console.log(value);
+        self.hCom.hideLoading();
         self.orders = value.body.value;
         console.log(self.orders);
       })
     }).catch((error)=>{
+      self.hCom.hideLoading();
       console.log("Error occured whilst requesting orders. " + error);
     })
   }
@@ -43,16 +46,18 @@ export class OrdersComponent implements OnInit {
   actuallyDelete(){
     var self = this;
     var orderID = self.currentOrderUID;
+    self.hCom.showLoading();
     self.us.getCurrentUser().then((user)=>{
       self.fbs.removeOrder(user.uid,orderID,()=>{
         console.log("Succesfully removed order!");
         for(var i = 0; i < self.orders.length; i++){
-          if(this.orders[i].orderUUID == orderID){
+          if(this.orders[i]['orderUUID'] == orderID){
             console.log("Found order to delete!");
             this.orders.splice(i, 1);
           }
         }
         this.closeDeleteDialog();
+        self.hCom.hideLoading();
       })
     })
   }

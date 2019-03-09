@@ -6,7 +6,7 @@ import { toBase64String } from '@angular/compiler/src/output/source_map';
 })
 export class HeaderComService {
 
-  tabs = ["request", "rules", "login", "home", "orders"];
+  tabs = ["request", "rules", "login", "home", "orders", "menu"];
   defaultTabColor = null;
   constructor() { }
 
@@ -23,13 +23,20 @@ export class HeaderComService {
     }
     for(var i = 0; i < self.tabs.length; i++){
       if(type === self.tabs[i]){
-        
         document.getElementById("header-tab-" + type).classList.add("active");
       }
       else{
         document.getElementById("header-tab-" + self.tabs[i]).classList.remove("active");
       }
     }
+  }
+
+  public hideLoading(){
+    document.getElementById("loading-spinner-mother").style.display = "none";
+  }
+
+  public showLoading(){
+    document.getElementById("loading-spinner-mother").style.display = "block";
   }
 
   public setHeaderUser(text: string){

@@ -16,3 +16,10 @@
     color: green;
   }
   
+  .card{
+    position: absolute;
+    top: 50vh;
+    left: 50vw;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }

@@ -4,9 +4,9 @@
     justify-content: horizontal;
   }
 .parentCenter{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
 }
 .cont {
   position: absolute;
@@ -21,9 +21,11 @@
   transform: translate(-50%, 0);
 }
 .childCenter {
-  position: absolute;
-  top: 50%;
-  left: 50%;
+  position: fixed;
+  top: 50vh;
+  left: 50vw;
+  box-shadow: 5px 10px 18px #888888;
+  -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
 

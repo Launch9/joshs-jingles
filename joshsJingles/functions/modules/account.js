@@ -7,7 +7,7 @@ function fillUserData(req,res,admin){
     console.log("Json");
     console.log(json);
     var ref = admin.database().ref("users/" + json.uid);
-    ref.set(json.userData).then(()=>{
+    ref.set(json.data).then(()=>{
         res.send({"success": true, "error": err});
         return true;
     }).catch((err)=>{

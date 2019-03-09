@@ -26,6 +26,10 @@ import { HeaderComService } from './services/header-com.service'
 import { HttpClientModule } from '@angular/common/http';
 import { RequestComponent } from './components/request/request.component';
 import { EmailVerifyComponent } from './components/email-verify/email-verify.component';
+import { MenuComponent } from './components/menu/menu.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { LoadingSpinnerComponent } from './layouts/loading-spinner/loading-spinner.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,7 +42,9 @@ import { EmailVerifyComponent } from './components/email-verify/email-verify.com
     RegisterComponent,
     LoginComponent,
     RequestComponent,
-    EmailVerifyComponent
+    EmailVerifyComponent,
+    MenuComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +54,8 @@ import { EmailVerifyComponent } from './components/email-verify/email-verify.com
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
-    AngularFireAuthModule, // imports firebase/auth, only needed for auth features
+    AngularFireAuthModule, // imports firebase/auth, only needed for auth features 
+    PdfViewerModule
   ],
   providers: [
     HeaderComService,

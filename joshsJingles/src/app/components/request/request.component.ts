@@ -24,7 +24,9 @@ export class RequestComponent implements OnInit {
     var self = this;
     self.hCom.setHeaderTab('request');
     console.log("Setting header!");
+    self.hCom.showLoading();
     this.userService.getCurrentUser().then((user)=>{
+      self.hCom.hideLoading();
       console.log("Logging user!");
       if(user.emailVerified === false){
         document.getElementById("emailWarning").style.display = "block";
@@ -72,11 +74,14 @@ export class RequestComponent implements OnInit {
         data.type ="default";
         break;
     }
+    self.hCom.showLoading();
     self.userService.getCurrentUser().then((user)=>{
       console.log(user);
       data["uid"] = user.uid;
-      self.firebase.addRequest(data, ()=>{
+      data["email"] = user.email;
+      self.firebase.addOrder(data, ()=>{
         console.log("Successfully sent card!");
+        self.hCom.hideLoading();
         this.router.navigate(['/']);
       })
     }, err => {

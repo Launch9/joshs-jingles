@@ -3,6 +3,7 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { FirebaseUserModel } from './user.model';
+import { HeaderComService } from './header-com.service';
 @Injectable()
 export class UserService {
 
@@ -10,7 +11,8 @@ export class UserService {
   user = null;
   constructor(
    public db: AngularFirestore,
-   public afAuth: AngularFireAuth
+   public afAuth: AngularFireAuth,
+   public hcom: HeaderComService
   ){}
 
   sendEmailVerification(onFinish: ()=>void=null, onFail: (error)=>void=null){
@@ -20,18 +22,24 @@ export class UserService {
         user.sendEmailVerification().then(function() {
           // Email sent.
             console.log("Email has been sent to " + user.email);
-            onFinish();
+            if(onFinish !== null){
+              onFinish();
+            }
+            
          }).catch(function(error) {
           console.log(error);
 
           // An error happened.
-          onFail(error);
+          if(onFail !== null){
+            onFail(error);
+          }
+          
          });
       }
     });
   }
 
-  getCurrentUser(){
+  getCurrentUser(hideLoadingOnFail=true){
     var self = this;
     return new Promise<any>((resolve, reject) => {
       console.log(self.user);
@@ -42,6 +50,9 @@ export class UserService {
             self.user = user;
             resolve(user);
           } else {
+            if(hideLoadingOnFail){
+              self.hcom.hideLoading();
+            }
             reject('No user logged in');
           }
         })
