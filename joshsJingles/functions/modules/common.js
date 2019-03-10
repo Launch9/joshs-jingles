@@ -1,6 +1,17 @@
+var bannedIPs = [];
+
 function logIP(req){
-    var ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
+    var ip = getIP(req);
     console.log("ip address: -> " + ip);
+    console.log("UTC -> " + new Date());
+}
+
+function getIP(req){
+    return req.header('x-forwarded-for') || req.connection.remoteAddress;
+}
+
+function endRequest(){
+    console.log("Request ended at: " + new Date());
 }
 
 function generateGuid(length) {
@@ -14,6 +25,17 @@ function generateGuid(length) {
     return guid;
 }
 
+function checkWhiteList(req){
+    var ip = getIP(req);
+    for(var i = 0; i < bannedIPs; i++){
+        if(ip === bannedIPs){
+            console.warn("BANNED IP ATTEMPTED TO ACCESS SERVER! -> ip: " + ip);
+            return false;
+        }
+    }
+    return true;
+}
+
 function setupResponse(response){
     response.set('Cache-Control', 'public, max-age=300, s-maxage=600');
 }
@@ -21,3 +43,4 @@ function setupResponse(response){
 exports.logIP = logIP;
 exports.generateGuid = generateGuid;
 exports.setupResponse = setupResponse;
+exports.checkWhiteList = checkWhiteList;

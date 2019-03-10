@@ -16,7 +16,6 @@
 }
 .child {
   position: absolute;
-  
   left: 50%;
   transform: translate(-50%, 0);
 }
@@ -52,6 +51,17 @@ textarea {
     cursor: pointer;
     top: 15px; 
     font-size: 15px;
+}
+
+.noOrdersText{
+  color: rgb(202, 6, 176);
+  font-size: 25px;
+  position: absolute;
+  display: none;
+  top: 50vh;
+  left: 50vw;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 .border-purchase{

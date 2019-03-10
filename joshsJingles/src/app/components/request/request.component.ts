@@ -78,7 +78,7 @@ export class RequestComponent implements OnInit {
     self.userService.getCurrentUser().then((user)=>{
       console.log(user);
       data["uid"] = user.uid;
-      data["email"] = user.email;
+      data["email2"] = user.email;
       self.firebase.addOrder(data, ()=>{
         console.log("Successfully sent card!");
         self.hCom.hideLoading();

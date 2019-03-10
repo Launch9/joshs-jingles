@@ -31,7 +31,7 @@ function removeOrder(req,res,admin){
                     throw error;
                 });
             })
-            
+            return true;
         }).catch((error)=>{
             console.log("Error remove order: " + error);
             res.send({"success": false, "error": error});
@@ -47,10 +47,11 @@ function requestOrders(req,res,admin){
     common.setupResponse(res);
     var userUID = req.query.userUID;
     console.log(userUID);
-    var usersRef = admin.database().ref("users/" + userUID);
+    var usersRef = admin.database().ref("users/");
     var userRef = admin.database().ref("users/" + userUID + "/requests/");
     var returnList = [];
     var keyList = [];
+    console.log(userUID);
     usersRef.child(userUID).once('value', function(snapshot) {
         if (snapshot.exists()) {
             console.log("Snapshot exists!");
@@ -72,6 +73,10 @@ function requestOrders(req,res,admin){
                             if(returnList.length === keyList.length){
                                 res.send({"success": true, "value":returnList});
                             }
+                            return true;
+                        }).catch((error)=>{
+                            console.error(error);
+                            throw(error);
                         });
                     }
                 }
@@ -90,6 +95,29 @@ function requestOrders(req,res,admin){
         }
     });
 
+    
+}
+
+function updateOrder(req,res,admin){
+    /*Logging information about the request*/
+    console.log("Updating order!");
+    common.logIP(req);
+    common.setupResponse(res);
+    var json = JSON.parse(req.body);
+    /*Sending email*/
+    email.sendEmail("Updating order: ", "Order updated as:\n\n " + req.body);
+    var orderUUID = json.orderUID;
+    var ref = admin.database().ref("globalOrders/" + orderUUID)
+    console.log("Cave story is a great game: ");
+    console.log(json);
+    ref.set(json.data).then(()=>{
+        res.send({"success": true});
+        return true;
+    }).catch((err)=>{
+        console.log("Error setting value. " + err);
+        res.send({"success": false, "error": err});
+        throw err;
+    });
     
 }
 
@@ -116,7 +144,7 @@ function addOrder(req,res,admin){
             res.send({"success": false, "error": err});
             throw err;
         })
-        
+        return true;
     }).catch((err)=>{
         console.log("Error setting value. " + err);
         res.send({"success": false, "error": err});
@@ -128,3 +156,4 @@ function addOrder(req,res,admin){
 exports.removeOrder = removeOrder;
 exports.requestOrders = requestOrders;
 exports.addOrder = addOrder;
+exports.updateOrder = updateOrder;

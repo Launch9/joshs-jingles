@@ -61,7 +61,7 @@ export class FirebaseService {
     headers.append('Content-Type', 'application/json');
     var json = JSON.stringify({"data":{"item": formData.email,
     "comment": formData.password,
-    "type": formData.type}, "uid": formData.uid});
+    "type": formData.type, "email": formData.email2}, "uid": formData.uid});
     self.http.post(environment.serverURL + 'addOrder', json, {headers: headers}).subscribe((value=>{
       callback(value);
     }), (err)=>{
@@ -76,8 +76,29 @@ export class FirebaseService {
     });
   }
 
-  public updateOrder(formData, callback:(value)=>void, onError:(error)=>void=null, hideLoadingOnFail=true){
-    
+  public updateOrder(formData, orderUID, callback:(value)=>void, onError:(error)=>void=null, hideLoadingOnFail=true){
+    var self = this;
+    console.log("Updating order again: ");
+    console.log(formData);
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    console.log("Calling update ORder!");
+    var json = JSON.stringify({"data":{"item": formData.email,
+    "comment": formData.password,
+    "type": formData.type, "email": formData.email2, "orderUUID": orderUID}, "orderUID": orderUID });
+    console.log(json);
+    self.http.put(environment.serverURL + 'updateOrder', json, {headers: headers}).subscribe((value=>{
+      callback(value);
+    }), (err)=>{
+      if(hideLoadingOnFail){
+        self.hcom.hideLoading();
+      }
+      if(onError !== null){
+        onError(err);
+      }else{
+        console.error(err);
+      }
+    });
   }
 
   public requestOrders(userUID, callback:(value)=>void, onError:(error)=>void=null, hideLoadingOnFail=true){

@@ -20,16 +20,24 @@ export class OrdersComponent implements OnInit {
     self.hCom.showLoading();
     self.us.getCurrentUser().then((user)=>{
       self.fbs.requestOrders(user.uid, (value)=>{
+        
         console.log("Request order value");
         console.log(value);
         self.hCom.hideLoading();
         self.orders = value.body.value;
+        if(self.orders.length === 0){
+          document.getElementById("noMessage").style.display = "block";
+        }
         console.log(self.orders);
       })
     }).catch((error)=>{
       self.hCom.hideLoading();
       console.log("Error occured whilst requesting orders. " + error);
     })
+  }
+
+  makeFormID(prefix, orderUID){
+    return prefix + orderUID;
   }
 
   openDeleteDialog(orderUID){
@@ -59,6 +67,36 @@ export class OrdersComponent implements OnInit {
         this.closeDeleteDialog();
         self.hCom.hideLoading();
       })
+    })
+  }
+
+  setButtonNonUpdated(doc){
+    doc.style.backgroundColor = "white";
+    doc.innerHTML = "Update Order";
+  }
+
+  setButtonUpdated(doc){
+    var self = this;
+    doc.style.backgroundColor = "pink";
+    doc.innerHTML = "Updated!";
+    setTimeout(()=>{
+      self.setButtonNonUpdated(doc);
+    }, 2000);
+  }
+
+  updateOrder(orderUID, orderType){
+    var self = this;
+    console.log(orderUID);
+    var itemDoc = <HTMLInputElement>document.getElementById("form-item-" + orderUID);
+    var commentDoc = <HTMLInputElement>document.getElementById("form-comment-" + orderUID);
+    var buttonDoc = document.getElementById('form-button-' + orderUID);
+    self.hCom.showLoading();
+    self.us.getCurrentUser().then((user)=>{
+      var fd = {"email": itemDoc.value, "password":commentDoc.value, "type": orderType, "email2": user.email};
+      self.fbs.updateOrder(fd,orderUID,(value)=>{
+        self.hCom.hideLoading();
+        self.setButtonUpdated(buttonDoc);
+      });
     })
   }
 

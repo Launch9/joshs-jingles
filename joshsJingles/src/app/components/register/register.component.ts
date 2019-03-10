@@ -13,7 +13,7 @@ import { UserService } from '../../services/user.service';
 export class RegisterComponent {
 
   registerForm: FormGroup;
-  errorMessage: string = 'dflkgnslkdjfbnfdkljbn';
+  errorMessage: string = '';
   successMessage: string = '';
   canRegister: boolean = true;
   constructor(
@@ -33,7 +33,8 @@ export class RegisterComponent {
      this.registerForm = this.fb.group({
        email: ['', Validators.required ],
        password: ['',Validators.required],
-       displayName: ['',Validators.required]
+       displayName: ['',Validators.required],
+       phoneNumber: ['']
      });
    }
 
@@ -41,8 +42,9 @@ export class RegisterComponent {
       var self = this;
       console.log("Value");
       console.log(value);
-      if(self.canRegister){
-        self.fireB.makeRoomForNewAccount(value.email, (res)=>{
+      if(1 === 1){
+        if(value.email.slice(-9) === "@uncc.edu"){
+          self.fireB.makeRoomForNewAccount(value.email, (res)=>{
 
             console.log("Value deal");
             console.log(value);
@@ -67,7 +69,12 @@ export class RegisterComponent {
               self.uData.sendEmailVerification();
             });
           
-        });
+          });
+        }
+        else{
+          this.errorMessage = "Please input your school email. The on you inputted does end with '@uncc.edu'";
+          this.successMessage = "";
+        }
       }
       else{
         console.log("You can't register again!");

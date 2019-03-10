@@ -33,42 +33,56 @@ app.use("/menu", express.static(__dirname + '/menu'));
  * Tells if the shop is currently open or not.
  */
 app.get('/isShopOpen', (request, response)=>{
-    console.log("Checking if shop is open!");
-    response.set('Cache-Control', 'public, max-age=300, s-maxage=600');
-    var ref = admin.database().ref("globalValues/isShopOpen");
-    ref.once('value').then((value)=>{
-        console.log(value.val());
-        response.send(value.val());
-        return value;
-    }).catch((err)=>{
-        console.log("Error getting value. " + err);
-        response.send("Error " + err);
-        throw err;
-    });
-    
+    if(common.checkWhiteList(request)){
+        console.log("Checking if shop is open!");
+        response.set('Cache-Control', 'public, max-age=300, s-maxage=600');
+        var ref = admin.database().ref("globalValues/isShopOpen");
+        ref.once('value').then((value)=>{
+            console.log(value.val());
+            response.send(value.val());
+            return value;
+        }).catch((err)=>{
+            console.log("Error getting value. " + err);
+            response.send("Error " + err);
+            throw err;
+        });
+    }
 });
 
 app.get('/ping', (req,res)=>{
-    console.log("User pinged server.");
-    res.send("pong");
+    if(common.checkWhiteList(req)){
+        console.log("User pinged server.");
+        res.send("pong");
+    }
+    
 })
 app.post('/fillUserData', (req,res)=>{
+    if(common.checkWhiteList(req))
     account.fillUserData(req,res,admin);
 });
 
 app.post('/makeRoomForNewAccount', (req,res)=>{
+    if(common.checkWhiteList(req))
     account.makeRoomForNewAccount(req,res,admin);
 });
 
 app.post('/addOrder', (req,res)=>{
+    if(common.checkWhiteList(req))
     order.addOrder(req,res,admin);
 });
 
 app.delete('/removeOrder', (req,res)=>{
+    if(common.checkWhiteList(req))
     order.removeOrder(req,res,admin);
 });
 
+app.put('/updateOrder', (req,res)=>{
+    if(common.checkWhiteList(req))
+    order.updateOrder(req,res,admin);
+});
+
 app.get('/requestOrders', (req,res)=>{
+    if(common.checkWhiteList(req))
     order.requestOrders(req,res,admin);
 });
 

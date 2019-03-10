@@ -1,3 +1,5 @@
+<div id="noMessage" class="noOrdersText text-backdrop">You have no pending orders. <br>Please make one by clicking the request button.</div>
+
 <div class="parent">
     <div class="child">
       <div *ngFor="let order of orders">
@@ -6,13 +8,13 @@
           
               <div class="form-group">
                 <label class="title-purchase">Purchase</label>
-                <input type="text" class="form-control" value="{{order.item}}">
+                <input id="{{makeFormID('form-item-',order.orderUUID)}}" type="text" class="form-control" value="{{order.item}}">
               </div>
               <div class="form-group">
                 <label class="title-purchase">Extra Information and Pickup Location</label>
-                <textarea class="form-control" rows="4" id="comment" value="{{order.comment}}"></textarea>
+                <textarea id="{{makeFormID('form-comment-',order.orderUUID)}}" class="form-control" rows="4" id="comment" value="{{order.comment}}"></textarea>
               </div>
-              <button type="submit" (click)="updateOrder()" class="btn btn-default">Update Order</button>
+              <button id="{{makeFormID('form-button-',order.orderUUID)}}" type="submit" (click)="updateOrder(order.orderUUID, order.type)" class="btn btn-default">Update Order</button>
             
         </div>
         <div *ngIf="order.type === 'sell'" class="letter border-sell">
@@ -20,13 +22,13 @@
           
               <div class="form-group">
                 <label class="title-sell">Sell</label>
-                <input type="text"  class="form-control" value="{{order.item}}">
+                <input id="{{makeFormID('form-item-',order.orderUUID)}}" type="text"  class="form-control" value="{{order.item}}">
               </div>
               <div class="form-group">
                 <label class="title-sell">Extra Information and Pickup Location</label>
-                <textarea class="form-control" rows="4" id="comment" value="{{order.comment}}"></textarea>
+                <textarea id="{{makeFormID('form-comment-',order.orderUUID)}}" class="form-control" rows="4" id="comment" value="{{order.comment}}"></textarea>
               </div>
-              <button type="submit" (click)="updateOrder()" class="btn btn-default">Update Order</button>
+              <button id="{{makeFormID('form-button-',order.orderUUID)}}" type="submit" (click)="updateOrder(order.orderUUID, order.type)" class="btn btn-default">Update Order</button>
             
         </div>
       </div>
