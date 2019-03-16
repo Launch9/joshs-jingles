@@ -39,47 +39,38 @@ export class RegisterComponent {
    }
 
    tryRegister(value){
+      
       var self = this;
-      console.log("Value");
-      console.log(value);
-      if(1 === 1){
+      self.hCom.showLoading();
+     
         if(value.email.slice(-9) === "@uncc.edu"){
           self.fireB.makeRoomForNewAccount(value.email, (res)=>{
 
-            console.log("Value deal");
-            console.log(value);
+           
             this.authService.doRegisterWithName(value, (error)=>{
-              console.log("Nope! I have an error!");
+             
               console.log(error);
               this.errorMessage = error.message;
               this.successMessage = "";
-              
+              self.hCom.hideLoading();
             })
             .then(res => {
-              console.log("Got here!");
-              console.log(res);
-              /*self.fireB.fillUserInfo({"data":{"email":value.email}, "uid":res.user.uid}, (value)=>{
-                console.log("Successfully filled user info.");
-              },(error)=>{
-                console.error(error);
-              })*/
+             
               this.errorMessage = "";
               this.successMessage = "Your account has been created. We sent you an email to verify your account.";
               self.canRegister = false;
               self.uData.sendEmailVerification();
+              self.hCom.hideLoading();
             });
           
           });
         }
         else{
-          this.errorMessage = "Please input your school email. The on you inputted does end with '@uncc.edu'";
+          this.errorMessage = "Please input your school email.";
           this.successMessage = "";
+          self.hCom.hideLoading();
         }
-      }
-      else{
-        console.log("You can't register again!");
-      }
-     
+      
    }
 
 }

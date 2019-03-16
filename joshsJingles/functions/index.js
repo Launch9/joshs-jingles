@@ -14,11 +14,10 @@ admin.initializeApp(
     functions.config().firebase
 )
 const app = express();
-const DIR = path.join(__dirname, 'uploads');
 
 //Middleware
 // use it before all route definitions
-app.use(cors({origin: 'http://localhost:4200'}));
+app.use(cors({origin: ['http://localhost:4200', 'https://joshsjingles.com']}));
 //Allow usage of json format.
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -34,15 +33,15 @@ app.use("/menu", express.static(__dirname + '/menu'));
  */
 app.get('/isShopOpen', (request, response)=>{
     if(common.checkWhiteList(request)){
-        console.log("Checking if shop is open!");
+       
         response.set('Cache-Control', 'public, max-age=300, s-maxage=600');
         var ref = admin.database().ref("globalValues/isShopOpen");
         ref.once('value').then((value)=>{
-            console.log(value.val());
+            
             response.send(value.val());
             return value;
         }).catch((err)=>{
-            console.log("Error getting value. " + err);
+            console.error("Error getting value. " + err);
             response.send("Error " + err);
             throw err;
         });

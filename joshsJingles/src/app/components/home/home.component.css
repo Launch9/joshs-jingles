@@ -6,3 +6,18 @@
     outline-width: 5px;
     outline-color: #df9d23;
 }
+.image-close{
+  display: block;
+  max-width:75vw;
+  max-height:321px;
+  width: auto;
+  height: auto;
+}
+
+.image-open{
+  display: block;
+  max-width:75vw;
+  max-height:360px;
+  width: auto;
+  height: auto;
+}

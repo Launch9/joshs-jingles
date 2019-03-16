@@ -1,7 +1,4 @@
-<p>
-  menu works!
-</p>
-
-<pdf-viewer [src]="'http://localhost:5001/joshsjingles/us-central1/app/menu/kirby.pdf'"
+<pdf-viewer id="pdf-viewer" [src]="'https://joshsjingles.firebaseapp.com/menu/menu.pdf'"
               [render-text]="true"
+              [zoom]="pdfZoom"
               style="display: block;"></pdf-viewer>

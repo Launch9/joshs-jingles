@@ -28,14 +28,13 @@ export class AppComponent {
   ngOnInit(): void {
     this.route.data.subscribe(routeData => {
       let data = routeData['data'];
-      console.log("WE GOT HEREEEEEEEEEE!!@@");
-      console.log(data);
+      
       if (data) {
-        console.log("Setting user!");
+      
         this.userService.user = data;
         this.createForm(this.userService.user.name);
       }
-      console.log(this.userService.user);
+     
     })
   }
 

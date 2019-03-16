@@ -14,23 +14,21 @@ export class HomeComponent implements OnInit {
   updateShopStatus(){
     var self = this;
     
-    console.log("Calling is shop open!");
-    console.log(self.gv);
+  
     self.hCom.setHeaderTab('home');
     self.hCom.showLoading();
     self.gv.isShopOpen((value)=>{
-      console.log("Shop value is: ");
-      console.log(value);
+    
       var imageOpen = document.getElementById('imageOpen');
       var imageClose = document.getElementById('imageClose');
-      if(value.body === false){
+      if(value === false){
         //Shop is closed.
-        console.log("Closing shop.");
+       
         imageOpen.style.display = "none";
         imageClose.style.display = "block";
       }else{
         //Shop is open.
-        console.log("Opening shop.");
+       
         imageOpen.style.display = "block";
         imageClose.style.display = "none";
       }
@@ -41,7 +39,6 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     var self = this;
     
-      console.log("Updating shop status!");
     self.updateShopStatus();
  
     

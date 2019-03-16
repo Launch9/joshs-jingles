@@ -10,6 +10,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { EmailVerifyComponent } from './components/email-verify/email-verify.component';
 import { MenuComponent } from './components/menu/menu.component';
+import { InfoComponent } from './components/info/info.component';
 
 export const routes: Routes = [
     {
@@ -51,6 +52,10 @@ export const routes: Routes = [
             {
                 path: 'menu',
                 component: MenuComponent
+            },
+            {
+                path: 'info',
+                component: InfoComponent
             }]
     },
     {

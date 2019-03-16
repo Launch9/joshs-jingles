@@ -11,13 +11,19 @@ import {GlobalValuesService } from '../../services/global-values.service';
 })
 export class MenuComponent implements OnInit {
   pdfSrc: string = "";
+  pdfZoom: Number = 0.5;
   constructor(private hcom: HeaderComService, private udservice: UserService, private firebase: FirebaseService
     , private gv: GlobalValuesService) { }
 
   ngOnInit() {
     var self = this;
     self.hcom.setHeaderTab("menu");
-    
+    window.onresize = (event)=>{
+      self.pdfZoom = window.innerWidth / 1600;
+      console.log(self.pdfZoom);
+    }
+    self.pdfZoom = window.innerWidth / 1600;
+      console.log(self.pdfZoom);
   }
 
 }

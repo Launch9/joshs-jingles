@@ -33,13 +33,15 @@ export class LoginComponent {
   }
 
   tryLogin(value){
-    console.log("Value");
-    console.log(value);
+    var self = this;
+    self.hCom.showLoading();
     this.authService.doLogin(value)
     .then(res => {
+      self.hCom.hideLoading();
       this.router.navigate(['/user']);
     }, err => {
       console.log(err);
+      self.hCom.hideLoading();
       this.errorMessage = err.message;
     })
   }

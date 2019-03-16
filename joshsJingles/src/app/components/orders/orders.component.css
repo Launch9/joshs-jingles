@@ -34,8 +34,10 @@ textarea {
 
 .letter {
   position: relative;
-  width: calc(50vw - 50px);
-  height: calc(300px);
+  max-width: 470px;
+  max-height:300px;
+  width: 85vw;
+  height: auto;
   background: white;
   margin-bottom: 4vh;
   border-style: solid;
@@ -89,8 +91,10 @@ textarea {
 }
 
 .delete-dialog{
-  width: calc(40vw - 50px);
-  height: calc(240px);
+  max-width: 400px;
+  max-height:240px;
+  width: 85vw;
+  height: auto;
   background: white;
   border-style: dashed;
   border-color: red;

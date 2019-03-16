@@ -21,8 +21,10 @@ textarea {
 }
 
 .letter {
-  width: calc(50vw - 50px);
-  height: calc(300px);
+  max-width: 470px;
+  max-height:300px;
+  width: 85vw;
+  height: auto;
   background: white;
   border-style: solid;
   border-width: 4px;

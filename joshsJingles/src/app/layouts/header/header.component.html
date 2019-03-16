@@ -1,21 +1,23 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
-    <a id="header-user-main" class="navbar-brand navbar-right">CesaStack</a>
+    <a id="header-user-main" class="navbar-brand navbar-right"></a>
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-      <a class="navbar-brand" id="header-tab-home"(click)="routeHome()">Josh's Jingles</a>
+      
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
+        <li><a class="navbar-brand" id="header-tab-home"(click)="routeHome()">{{brandName}}</a></li>
         <li id="header-tab-request"><a routerLink="/request" routerLinkActive="active">Request</a></li>
         <li id="header-tab-rules"><a routerLink="/rules" routerLinkActive="active">Rules</a></li>
         <li id="header-tab-login"><a routerLink="/login" routerLinkActive="active">Login</a></li>
         <li id="header-tab-orders"><a routerLink="/orders" routerLinkActive="active">Orders</a></li>
         <li id="header-tab-menu"><a routerLink="/menu" routerLinkActive="active">Menu</a></li>
+        <li id="header-tab-info"><a routerLink="/info" routerLinkActive="active">Info</a></li>
       </ul>
     </div>
   </div>

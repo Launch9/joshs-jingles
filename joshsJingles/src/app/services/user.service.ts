@@ -42,11 +42,9 @@ export class UserService {
   getCurrentUser(hideLoadingOnFail=true){
     var self = this;
     return new Promise<any>((resolve, reject) => {
-      console.log(self.user);
       if(self.user === null){
         var user = firebase.auth().onAuthStateChanged(function(user){
           if (user) {
-            console.log("Setting user...");
             self.user = user;
             resolve(user);
           } else {

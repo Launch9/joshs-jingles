@@ -4,6 +4,7 @@ import {HeaderComService} from '../../services/header-com.service';
 import { FirebaseService } from '../../services/firebase.service';
 import { Router, Params } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { GlobalValuesService } from '../../services/global-values.service';
 
 @Component({
   selector: 'app-request',
@@ -14,7 +15,7 @@ export class RequestComponent implements OnInit {
   purchaseForm: FormGroup;
   sellForm: FormGroup;
   typeOfLetterSelected = 0;
-  constructor(private router: Router, private firebase: FirebaseService, private userService: UserService,private fb: FormBuilder,private hCom: HeaderComService) {
+  constructor(private router: Router, private gvs: GlobalValuesService, private firebase: FirebaseService, private userService: UserService,private fb: FormBuilder,private hCom: HeaderComService) {
     var self = this;
     self.hCom.setHeaderTab('request');
     this.createForm();
@@ -23,11 +24,21 @@ export class RequestComponent implements OnInit {
   ngOnInit() {
     var self = this;
     self.hCom.setHeaderTab('request');
-    console.log("Setting header!");
+   
     self.hCom.showLoading();
+
+    this.gvs.isShopOpen((value)=>{
+     
+      if(!value){
+        document.getElementById("shopClosedWarning").style.display = "block";
+      }
+      else{
+        document.getElementById("shopClosedWarning").style.display = "none";
+      }
+    })
     this.userService.getCurrentUser().then((user)=>{
       self.hCom.hideLoading();
-      console.log("Logging user!");
+     
       if(user.emailVerified === false){
         document.getElementById("emailWarning").style.display = "block";
       }
@@ -58,8 +69,7 @@ export class RequestComponent implements OnInit {
 
   sendCard(data){
     var self = this;
-    console.log("Logging formData!");
-    console.log(data);
+   
     switch(self.typeOfLetterSelected){
       case 0:
         data.type = "nothing?";
@@ -76,7 +86,7 @@ export class RequestComponent implements OnInit {
     }
     self.hCom.showLoading();
     self.userService.getCurrentUser().then((user)=>{
-      console.log(user);
+    
       data["uid"] = user.uid;
       data["email2"] = user.email;
       self.firebase.addOrder(data, ()=>{

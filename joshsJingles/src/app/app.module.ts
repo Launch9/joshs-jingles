@@ -29,6 +29,7 @@ import { EmailVerifyComponent } from './components/email-verify/email-verify.com
 import { MenuComponent } from './components/menu/menu.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { LoadingSpinnerComponent } from './layouts/loading-spinner/loading-spinner.component';
+import { InfoComponent } from './components/info/info.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { LoadingSpinnerComponent } from './layouts/loading-spinner/loading-spinn
     RequestComponent,
     EmailVerifyComponent,
     MenuComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    InfoComponent
   ],
   imports: [
     BrowserModule,

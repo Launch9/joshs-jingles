@@ -78,15 +78,14 @@ export class FirebaseService {
 
   public updateOrder(formData, orderUID, callback:(value)=>void, onError:(error)=>void=null, hideLoadingOnFail=true){
     var self = this;
-    console.log("Updating order again: ");
-    console.log(formData);
+  
     let headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
-    console.log("Calling update ORder!");
+   
     var json = JSON.stringify({"data":{"item": formData.email,
     "comment": formData.password,
     "type": formData.type, "email": formData.email2, "orderUUID": orderUID}, "orderUID": orderUID });
-    console.log(json);
+    
     self.http.put(environment.serverURL + 'updateOrder', json, {headers: headers}).subscribe((value=>{
       callback(value);
     }), (err)=>{
@@ -102,7 +101,7 @@ export class FirebaseService {
   }
 
   public requestOrders(userUID, callback:(value)=>void, onError:(error)=>void=null, hideLoadingOnFail=true){
-    console.log("Requesting orders");
+   
     var self = this;
     let headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
@@ -111,8 +110,6 @@ export class FirebaseService {
         userUID: userUID
       },
       observe: 'response'}).subscribe((value=>{
-        console.log("This is the response1");
-        console.log(value);
         callback(value);
     }), (err)=>{
       if(hideLoadingOnFail){
@@ -127,7 +124,7 @@ export class FirebaseService {
   }
 
   public removeOrder(userUID, orderUID, callback:(value)=>void, onError:(error)=>void=null, hideLoadingOnFail=true){
-    console.log("Removing order!");
+  
     var self = this;
     const options = {
       headers: new HttpHeaders({

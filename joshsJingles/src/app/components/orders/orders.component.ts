@@ -21,14 +21,13 @@ export class OrdersComponent implements OnInit {
     self.us.getCurrentUser().then((user)=>{
       self.fbs.requestOrders(user.uid, (value)=>{
         
-        console.log("Request order value");
-        console.log(value);
+      
         self.hCom.hideLoading();
         self.orders = value.body.value;
         if(self.orders.length === 0){
           document.getElementById("noMessage").style.display = "block";
         }
-        console.log(self.orders);
+       
       })
     }).catch((error)=>{
       self.hCom.hideLoading();
@@ -42,7 +41,7 @@ export class OrdersComponent implements OnInit {
 
   openDeleteDialog(orderUID){
     var self = this;
-    console.log("OrderUID: " + orderUID);
+    
     self.currentOrderUID = orderUID;
     document.getElementById("deleteDialog").style.display = "block";
   }
@@ -57,10 +56,10 @@ export class OrdersComponent implements OnInit {
     self.hCom.showLoading();
     self.us.getCurrentUser().then((user)=>{
       self.fbs.removeOrder(user.uid,orderID,()=>{
-        console.log("Succesfully removed order!");
+      
         for(var i = 0; i < self.orders.length; i++){
           if(this.orders[i]['orderUUID'] == orderID){
-            console.log("Found order to delete!");
+          
             this.orders.splice(i, 1);
           }
         }
@@ -86,7 +85,7 @@ export class OrdersComponent implements OnInit {
 
   updateOrder(orderUID, orderType){
     var self = this;
-    console.log(orderUID);
+   
     var itemDoc = <HTMLInputElement>document.getElementById("form-item-" + orderUID);
     var commentDoc = <HTMLInputElement>document.getElementById("form-comment-" + orderUID);
     var buttonDoc = document.getElementById('form-button-' + orderUID);
